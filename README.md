@@ -1,6 +1,6 @@
 <h1>O labirinto recorrente</h1>
 
-<p>Agora que produzimos um trabalho de aquecimento que envolve o caminhamento de matrizes, está na hora de incluir nesse processo execuções mais elaboradas, as quais nos permita analisar o custo computacional de todo o processo. Sendo assim, considere o seguinte problema:</p>
+<p align="justify">Agora que produzimos um trabalho de aquecimento que envolve o caminhamento de matrizes, está na hora de incluir nesse processo execuções mais elaboradas, as quais nos permita analisar o custo computacional de todo o processo. Sendo assim, considere o seguinte problema:</p>
 
 <ul>
     <li>Um garoto se encontra perdido em um labirinto, o qual é compreendido por nós como sendo uma matriz cujas posição de sua localização é dada por um valor x,y dessa estrutura. Nesse labirinto há paredes que bloqueiam certos passos (#), perigos que consomem parte de sua vida (*) e trajetórias (valores positivos que devem ser subtraídos em 1 a cada passagem).</li>
@@ -14,9 +14,9 @@
     <li>Para essa atividade, considere selecionar um passo de cada vez de forma aleatória, ou seja, escolha um valor x,y aleatoriamente e vá para ele se possível ou descarte caso seja uma parede. Perigos não são evitados, então, se a posição escolhida for um, enfrente-o. Por fim, a intenção global do problema não é encontrar uma saída, mas sim, tentar consumir o máximo possível de itens até chegar a zerar as possibilidades desse tipo ou morrer tentando.</li>
 </ul>
   
-<p>Qual o custo computacional da sua estratégia randômica? Se mostrou uma boa alternativa de execução?</p>
+<p align="justify">Qual o custo computacional da sua estratégia randômica? Se mostrou uma boa alternativa de execução?</p>
 
-<p><b>Observações:</b></p>
+<p align="justify"><b>Observações:</b></p>
 
 <ol>
     <li>Certifique-se de que seu código possa ser executado em Linux, para tanto, faça uso de máquinas virtuais, wsl ou distribuições como Ubuntu instaladas no seu ambiente de trabalho.</li>
