@@ -1,8 +1,12 @@
 <h1>O labirinto recorrente</h1>
 
+<ul>
+    <li>Rafael</li>
+    <li>Guimar
+</ul>
 <p align="justify">Agora que produzimos um trabalho de aquecimento que envolve o caminhamento de matrizes, está na hora de incluir nesse processo execuções mais elaboradas, as quais nos permita analisar o custo computacional de todo o processo. Sendo assim, considere o seguinte problema:</p>
 
-<ul align="justify">
+<ul>
     <li>Um garoto se encontra perdido em um labirinto, o qual é compreendido por nós como sendo uma matriz cujas posição de sua localização é dada por um valor x,y dessa estrutura. Nesse labirinto há paredes que bloqueiam certos passos (#), perigos que consomem parte de sua vida (*) e trajetórias (valores positivos que devem ser subtraídos em 1 a cada passagem).</li>
 
     <li>Quanto as paredes #, não há muito o que fazer a não ser desviar e continuar a rota. Já os perigos, a cada passada, tende a subtrair 1 de vida de um total de 10. Assim, ao ficar sem pontos de vida o algoritmo deve parar e indicar fim de jogo.</li>
