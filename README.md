@@ -1,9 +1,5 @@
 <h1>O labirinto recorrente</h1>
 
-<ul>
-    <li>Rafael</li>
-    <li>Guimar
-</ul>
 <p align="justify">Agora que produzimos um trabalho de aquecimento que envolve o caminhamento de matrizes, está na hora de incluir nesse processo execuções mais elaboradas, as quais nos permita analisar o custo computacional de todo o processo. Sendo assim, considere o seguinte problema:</p>
 
 <ul>
