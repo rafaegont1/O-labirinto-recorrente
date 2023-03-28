@@ -20,7 +20,7 @@
   
 <p align="justify">Qual o custo computacional da sua estratégia randômica? Se mostrou uma boa alternativa de execução?</p>
 
-<p align="justify"><b>Observações:</b></p>
+<h2>Observações:</h2>
 
 <ol>
     <li>Certifique-se de que seu código possa ser executado em Linux, para tanto, faça uso de máquinas virtuais, wsl ou distribuições como Ubuntu instaladas no seu ambiente de trabalho.</li>
