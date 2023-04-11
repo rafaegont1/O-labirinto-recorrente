@@ -10,7 +10,7 @@
 
 #define RED_COLOR "\x1b[31;1m"
 #define NO_COLOR "\x1b[0;0m"
-#define SLEEP_TIME 500000
+#define SLEEP_TIME 100000
 
 class Maze {
 public:
@@ -19,6 +19,7 @@ public:
   std::ifstream input_file;
   std::ofstream output_file;
   short mat_width, mat_height, mat_qty, mat_elements, current_mat;
+  bool took_item;
 
   Maze();
   virtual ~Maze();
@@ -32,11 +33,9 @@ public:
   void rewind();
   void run();
   void random_start();
-  void move();
+  void move(bool &victory);
   bool out_of_bounds(const short &move_x, const short &move_y);
   void dynamic_print();
-  void victory_quote();
-  void defeat_quote();
   void open_files(const std::string &in, const std::string &out);
 };
 

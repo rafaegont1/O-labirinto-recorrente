@@ -7,8 +7,8 @@ typedef struct move Move;
 
 class Player {
 public:
-  short x, y, lives, items;
-  bool victory;
+  short x, y, lives, items, dist_covered;
+  bool took_item;
 
   Player();
   Player(short &x, short &y);

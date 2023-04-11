@@ -62,26 +62,30 @@ void Maze::write_matrix() {
 }
 
 void Maze::run() {
+  bool victory = false;
+
   current_mat = 0;
   dynamic_print();
   usleep(SLEEP_TIME);
 
-  while(this->player.is_alive()) {
-    move();
+  while(this->player.is_alive() && !victory) {
+    move(victory);
     player.action(mat[player.x +
                       player.y * mat_width]);
     dynamic_print();
     usleep(SLEEP_TIME);
   }
 
-  std::cout << "\x7\x1b[" << mat_height + 2 << 'E'
-            << (player.lives != 0 && player.victory
-                ? "Vitória!\n" : "Derrota\n");
+  std::cout << "\x1b[" << mat_height + 2 << 'E'
+            << (victory ? "Vitória!\n" : "Derrota\n")
+            << "N° de casas percorridas: "
+            << player.dist_covered
+            << std::endl;
 
   write_file();
 }
 
-void Maze::move() {
+void Maze::move(bool &victory) {
   short move_x, move_y;
   bool teleport = false;
   std::random_device rd;
@@ -97,7 +101,8 @@ void Maze::move() {
   if(teleport) {
     write_matrix();
     if(current_mat == mat_qty) {
-      rewind();
+      if(!player.took_item) victory = true;
+      else rewind();
     } else {
       read();
       ++current_mat;
@@ -107,6 +112,8 @@ void Maze::move() {
     this->player.x = move_x;
     this->player.y = move_y;
   }
+
+  ++player.dist_covered;
 }
 
 void Maze::rewind() {
@@ -120,7 +127,7 @@ void Maze::rewind() {
   read();
   write_sizes();
   current_mat = 0;
-  player.victory = true;
+  player.took_item = false;
 }
 
 void Maze::print_matrix() {

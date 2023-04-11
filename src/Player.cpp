@@ -1,10 +1,10 @@
 #include "Player.hpp"
 
 Player::Player()
-  : x(0), y(0), lives(10), items(0), victory(true) {}
+  : x(0), y(0), lives(10), items(0), dist_covered(0), took_item(false) {}
 
 Player::Player(short &x, short &y)
-  : x(x), y(y), lives(10), items(0), victory(true) {}
+  : x(x), y(y), lives(10), items(0), dist_covered(0), took_item(false) {}
 
 void Player::action(char &item) {
   if(item == '*') {
@@ -12,7 +12,7 @@ void Player::action(char &item) {
   } else if(item != '0') {
     ++this->items;
     --item;
-    this->victory = false;
+    this->took_item = true;
   }
   
   if(this->items == 4) {
