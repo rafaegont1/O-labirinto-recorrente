@@ -56,48 +56,44 @@
 </table>
 
 <p align="justify">
-  A seguir, é mostrado um exemplo de um labirinto de apenas um matriz como entrada. O garoto começará na primeira coluna da primeira linha, e caminhará na diagonal até a última coluna da última linha. Supondo que o garoto comece com 10 vidas, 0 itens, a interação dele com as casas mudará estas estatísticas. A tabela da esquerda representa a entrada, enquanto o da direita mostra a saída.
+  A seguir, é mostrado um exemplo de um labirinto de apenas um matriz como entrada. O garoto começará na primeira coluna da primeira linha, e caminhará na diagonal até a última coluna da última linha. Supondo que o garoto comece com 10 vidas, 0 itens, a interação dele com as casas mudará estas estatísticas. A tabela de cima representa a entrada, enquanto a de baixo mostra a saída.
 </p>
 
-<div style="display: inline-block;width: 49%;">
-  <table>
-    <tr>
-      <td align="center">$\colorbox{olive}{2}$</td>
-      <td align="center">#</td>
-      <td align="center">*</td>
-    </tr>
-    <tr>
-      <td align="center">4</td>
-      <td align="center">$\colorbox{olive}{*}$</td>
-      <td align="center">#</td>
-    </tr>
-    <tr>
-      <td align="center">#</td>
-      <td align="center">#</td>
-      <td align="center">$\colorbox{olive}{0}$</td>
-    </tr>
-  </table>
-</div>
+<table>
+  <tr>
+    <td align="center">$\colorbox{olive}{2}$</td>
+    <td align="center">#</td>
+    <td align="center">*</td>
+  </tr>
+  <tr>
+    <td align="center">4</td>
+    <td align="center">$\colorbox{olive}{*}$</td>
+    <td align="center">#</td>
+  </tr>
+  <tr>
+    <td align="center">#</td>
+    <td align="center">#</td>
+    <td align="center">$\colorbox{olive}{0}$</td>
+  </tr>
+</table>
 
-<div style="display: inline-block;width: 49%;">
-  <table>
-    <tr>
-      <td align="center">$\colorbox{olive}{1}$</td>
-      <td align="center">#</td>
-      <td align="center">*</td>
-    </tr>
-    <tr>
-      <td align="center">4</td>
-      <td align="center">$\colorbox{olive}{*}$</td>
-      <td align="center">#</td>
-    </tr>
-    <tr>
-      <td align="center">#</td>
-      <td align="center">#</td>
-      <td align="center">$\colorbox{olive}{0}$</td>
-    </tr>
-  </table>
-</div>
+<table>
+  <tr>
+    <td align="center">$\colorbox{olive}{1}$</td>
+    <td align="center">#</td>
+    <td align="center">*</td>
+  </tr>
+  <tr>
+    <td align="center">4</td>
+    <td align="center">$\colorbox{olive}{*}$</td>
+    <td align="center">#</td>
+  </tr>
+  <tr>
+    <td align="center">#</td>
+    <td align="center">#</td>
+    <td align="center">$\colorbox{olive}{0}$</td>
+  </tr>
+</table>
 
 <p align="justify">
   É possível perceber que o garoto consumiu um item na primeira casa, que tinha dois itens e passou a ter apenas um. O garoto ainda enfrentou um perigo no meio da matriz, e chegou a última casa que não tinha nehum item. Com isso, o garoto passou a ter 9 vidas e 1 item no inventário.
@@ -117,19 +113,19 @@
 
 <ul>
   <li>
-    <code><strong>main.cpp:</strong></code> Possui a função <i>int main()</i>, que define o local de início (<i>entry point</i>) do programa e returna o <i>exit code</i>.
+    <code><strong>main.cpp</strong></code> Possui a função <i>int main()</i>, que define o local de início (<i>entry point</i>) do programa e returna o <i>exit code</i>.
   </li>
   <li>
-    <code><strong>Maze.hpp:</strong></code> Arquivo <i>header</i> que define a classe <i>Maze</i>, assim como seus atributos e métodos que será compartilhado entre os arquivos do programa.
+    <code><strong>Maze.hpp</strong></code> Arquivo <i>header</i> que define a classe <i>Maze</i>, assim como seus atributos e métodos que será compartilhado entre os arquivos do programa.
   </li>
   <li>
-    <code><strong>Maze.cpp:</strong></code> Possui o corpo do construtor, destrutor e métodos da classe <i>Maze</i> definidos no arquivo <i>Maze.hpp</i>.
+    <code><strong>Maze.cpp</strong></code> Possui o corpo do construtor, destrutor e métodos da classe <i>Maze</i> definidos no arquivo <i>Maze.hpp</i>.
   </li>
   <li>
-    <code><strong>Player.hpp:</strong></code> Arquivo <i>header</i> que define a classe <i>Player</i>, assim como seus atributos e métodos que será compartilhado entre os arquivos do programa.
+    <code><strong>Player.hpp</strong></code> Arquivo <i>header</i> que define a classe <i>Player</i>, assim como seus atributos e métodos que será compartilhado entre os arquivos do programa.
   </li>
   <li>
-    <code><strong>Player.cpp:</strong></code> Possui o corpo do construtor, destrutor e métodos da classe <i>Player</i> definidos no arquivo <i>Player.hpp</i>.
+    <code><strong>Player.cpp</strong></code> Possui o corpo do construtor, destrutor e métodos da classe <i>Player</i> definidos no arquivo <i>Player.hpp</i>.
   </li>
 </ul>
 
