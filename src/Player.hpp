@@ -7,21 +7,16 @@ typedef struct move Move;
 
 class Player {
 public:
-  short x, y, lives, items, dist_covered;
-  bool took_item;
+  short x, y, lives, items, dist_covered,
+        items_consumed, visited_qty, dangers;
+  bool took_item, teleport;
 
   Player();
-  Player(short &x, short &y);
 
   void action(char &item);
   void print();
   std::string status();
   bool is_alive();
-
-  short getX();
-  short getY();
-  short getLives();
-  short getItems();
 };
 
 #endif

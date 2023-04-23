@@ -1,93 +1,118 @@
 #include "Maze.hpp"
 
-Maze::Maze() {
+using std::cin;
+using std::cout;
+using std::endl;
+
+Maze::Maze() : current_mat(0), victory(false), have_items(false) {
   open_files("./dataset/input.data", "./dataset/tmp.data");
 
-  input_file >> this->mat_width
-             >> this->mat_height
-             >> this->mat_qty;
+  input_file >> mat_width
+             >> mat_height
+             >> mat_qty;
 
   write_sizes();
-  this->mat_elements = this->mat_width * this->mat_height;
-  mat.resize(this->mat_elements);
+  mat_elements = mat_width * mat_height;
+  mat.resize(mat_elements);
+  mat_visited.resize(mat_elements);
+  read(false);
+  write_file(false);
+  current_mat = 0;
+  input_file.close();
+  output_file.close();
+  open_files("./dataset/output.data", "./dataset/tmp.data");
+  write_sizes();
+  input_file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   read();
 }
 
 Maze::~Maze() {
-  this->input_file.close();
-  this->output_file.close();
+  input_file.close();
+  output_file.close();
 }
 
 void Maze::set_start() {
-  std::cout << "Digite a posição inicial (x y): ";
-  while (!(std::cin >> this->player.x >> this->player.y)
-      || this->player.x < 0 || this->player.x >= mat_width
-      || this->player.y < 0 || this->player.y >= mat_height
-      || mat[this->player.x + this->player.y * mat_width] == '#') {
-    std::cout << "Posição inválida. Tente novamente: ";
+  cout << "Digite a posição inicial (x y): ";
+  while (!(cin >> player.x >> player.y)
+      || player.x < 0 || player.x >= mat_width
+      || player.y < 0 || player.y >= mat_height
+      || mat[player.x + player.y * mat_width] == '#') {
+    cout << "Posição inválida. Tente novamente: ";
   }
 }
 
-void Maze::read() {
-  for(short i = 0; i < mat_elements; i++) {
-    input_file >> this->mat[i];
+void Maze::open_files(const std::string &in,
+                      const std::string &out) {
+  input_file.open(in);
+  output_file.open(out);
+
+  if(!input_file.is_open()) {
+    std::cerr << RED_COLOR
+              << "Erro ao tentar abrir o arquivo "
+              << in << NO_COLOR << endl;
+    exit(EXIT_FAILURE);
   }
-}
-
-void Maze::write_file() {
-  write_matrix();
-
-  while(++current_mat < mat_qty) {
-    read();
-    write_matrix();
+  if(!output_file.is_open()) {
+    std::cerr << RED_COLOR
+              << "Erro ao tentar abrir o arquivo "
+              << out << NO_COLOR << endl;
+    exit(EXIT_FAILURE);
   }
-
-  rename("./dataset/tmp.data", "./dataset/output.data");
 }
 
 void Maze::write_sizes() {
-  output_file << this->mat_width  << ' '
-              << this->mat_height << ' '
-              << this->mat_qty    << '\n';
+  output_file << mat_width  << ' '
+              << mat_height << ' '
+              << mat_qty    << '\n';
 }
 
-void Maze::write_matrix() {
+void Maze::read(const bool &read_mat_visited) {
+  if(!read_mat_visited) {
+    for(short i = 0; i < mat_height; i++) {
+      for(short j = 0; j < mat_width; j++) {
+        input_file >> mat[mat_width * i + j];
+      }
+    }
+    return;
+  }
+
+  char c;
+
   for(short i = 0; i < mat_height; i++) {
     for(short j = 0; j < mat_width; j++) {
-      output_file << this->mat[mat_width * i + j] << ' ';
+      input_file >> mat[mat_width * i + j];
     }
-    output_file << '\n';
+    for(short j = 0; j < mat_width; j++) {
+      input_file >> c;
+      mat_visited[mat_width * i + j] = (c == '1');
+    }
   }
-  output_file << '\n';
 }
 
 void Maze::run() {
-  bool victory = false;
+  action();
 
-  current_mat = 0;
-  dynamic_print();
-  usleep(SLEEP_TIME);
-
-  while(this->player.is_alive() && !victory) {
-    move(victory);
-    player.action(mat[player.x +
-                      player.y * mat_width]);
-    dynamic_print();
-    usleep(SLEEP_TIME);
+  while(player.is_alive() && !victory && !only_zeros()) {
+    joystick();
+    if(player.teleport) teleport();
+    action();
   }
 
-  std::cout << "\x1b[" << mat_height + 2 << 'E'
-            << (victory ? "Vitória!\n" : "Derrota\n")
-            << "N° de casas percorridas: "
-            << player.dist_covered
-            << std::endl;
-
   write_file();
+  print();
 }
 
-void Maze::move(bool &victory) {
+void Maze::action() {
+  player.action(mat[player.x
+                  + player.y * mat_width]);
+  if(!mat_visited[mat_width * player.y + player.x]) {
+    ++player.visited_qty;
+    mat_visited[mat_width * player.y + player.x] = true;
+  }
+}
+
+void Maze::joystick() {
   short move_x, move_y;
-  bool teleport = false;
   std::random_device rd;
   std::mt19937 mt(rd());
   std::uniform_int_distribution<short> dist(-1, 1);
@@ -95,29 +120,63 @@ void Maze::move(bool &victory) {
   do {
     move_x = player.x + dist(mt);
     move_y = player.y + dist(mt);
-  } while(!(teleport = out_of_bounds(move_x, move_y)) &&
-          mat[move_x + move_y * mat_width] == '#');
+  } while(!(player.teleport = out_of_bounds(move_x, move_y))
+       && mat[move_x + move_y * mat_width] == '#');
 
-  if(teleport) {
-    write_matrix();
-    if(current_mat == mat_qty) {
-      if(!player.took_item) victory = true;
-      else rewind();
+  if(player.x != move_x || player.y != move_y) ++player.dist_covered;
+
+  player.x = move_x;
+  player.y = move_y;
+}
+
+bool Maze::out_of_bounds(const short &move_x, const short &move_y) {
+  return move_x < 0
+      || move_x == mat_width
+      || move_y < 0
+      || move_y == mat_height;
+}
+
+void Maze::teleport() {
+    if(current_mat + 1 == mat_qty) {
+      if(player.took_item) rewind();
+      else victory = true;
     } else {
+      write_matrix();
+      mat_have_item();
       read();
-      ++current_mat;
     }
     random_start();
-  } else {
-    this->player.x = move_x;
-    this->player.y = move_y;
+    player.teleport = false;
+}
+
+void Maze::write_matrix() {
+  for(short i = 0; i < mat_height; i++) {
+    for(short j = 0; j < mat_width; j++) {
+      output_file << mat[mat_width * i + j] << ' ';
+    }
+    for(short j = 0; j < mat_width; j++) {
+      output_file << mat_visited[mat_width * i + j] << ' ';
+    }
+    output_file << '\n';
+  }
+  output_file << '\n';
+  ++current_mat;
+}
+
+void Maze::write_file(const bool &read_mat_visited) {
+  write_matrix();
+
+  while(current_mat < mat_qty) {
+    read(read_mat_visited);
+    write_matrix();
   }
 
-  ++player.dist_covered;
+  rename("./dataset/tmp.data", "./dataset/output.data");
 }
 
 void Maze::rewind() {
-  //std::cout << "Rewinding..." << std::endl; // scribble
+  have_items = false;
+  write_matrix();
   input_file.close();
   output_file.close();
 
@@ -130,70 +189,61 @@ void Maze::rewind() {
   player.took_item = false;
 }
 
-void Maze::print_matrix() {
-  for(short i = 0; i < mat_height; i++) {
-    for(short j = 0; j < mat_width; j++) {
-      std::cout << mat[mat_width * i + j] << ' ';
-    }
-    std::cout << '\n';
-  }
-  std::cout << std::endl;
-}
-
 void Maze::random_start() {
   std::random_device rd;
   std::mt19937 mt(rd());
-  std::uniform_int_distribution<short> dist1(0, this->mat_width - 1), dist2(0, this->mat_height - 1);
+  std::uniform_int_distribution<short> dist1(0, mat_width - 1), dist2(0, mat_height - 1);
 
   do {
-    this->player.x = dist1(mt);
-    this->player.y = dist2(mt);
-  } while(mat[this->player.x + this->player.y * mat_width] == '#');
+    player.x = dist1(mt);
+    player.y = dist2(mt);
+  } while(mat[player.x + player.y * mat_width] == '#');
 }
 
-bool Maze::out_of_bounds(const short &move_x, const short &move_y) {
-  return move_x < 0
-      || move_x == mat_width
-      || move_y < 0
-      || move_y == mat_height;
-}
-
-void Maze::dynamic_print() {
-  player.print();
-  for(short i = 0; i < mat_height; i++) {
-    for(short j = 0; j < mat_width; j++) {
-      if(player.x == j && player.y == i) {
-        std::cout << player.status()
-                  << mat[mat_width * i + j]
-                  << "\x1b[0;0m ";
-      } else {
-        std::cout << mat[mat_width * i + j] << ' ';
-      }
+void Maze::mat_have_item() {
+  for(short i = 0; i < mat_elements; i++) {
+    if(mat[i] >= '1' && mat[i] <= '9') {
+      have_items = true;
+      return;
     }
-    std::cout << '\n';
   }
-  std::cout << std::endl
-            << "\x7\x1b[" << mat_height + 2 << 'F';
 }
 
-void Maze::open_files(const std::string &in, const std::string &out) {
-  input_file.open(in);
-  output_file.open(out);
+bool Maze::only_zeros() {
+  if(have_items) return false;
 
-  if(!input_file.is_open()) {
-    std::cerr << RED_COLOR
-                 "Erro ao tentar abrir o arquivo "
-              << in 
-              << NO_COLOR
-              << std::endl;
-    exit(EXIT_FAILURE);
+  std::ifstream check_file("./dataset/output.data");
+  char c;
+
+  check_file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  for(short i = 0; i < (mat_height + 1) * current_mat; i++) {
+    check_file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   }
-  if(!output_file.is_open()) {
-    std::cerr << RED_COLOR
-                 "Erro ao tentar abrir o arquivo "
-              << out
-              << NO_COLOR
-              << std::endl;
-    exit(EXIT_FAILURE);
+
+  for(short k = current_mat + 1; k < mat_qty; k++) {
+    for(short i = 0; i < mat_height; i++) {
+      for(short j = 0; j < mat_height; j++) {
+        check_file >> c;
+        if(c >= '1' && c <= '9') {
+          return false;
+        }
+      }
+      check_file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
   }
+  victory = true;
+  return true;
+}
+
+void Maze::print() {
+  cout << (victory ? GREEN_COLOR "Vitória!\n" : RED_COLOR "Derrota\n")
+       << NO_COLOR "Total de casas percorridas: "
+       << player.dist_covered
+       << "\nItens consumidos: "
+       << player.items_consumed
+       << "\nCasas inexploradas: "
+       << mat_qty * mat_elements - player.visited_qty
+       << "\nPerigos enfrentados: "
+       << player.dangers
+       << endl;
 }

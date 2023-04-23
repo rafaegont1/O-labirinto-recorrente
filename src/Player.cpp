@@ -1,16 +1,21 @@
 #include "Player.hpp"
 
-Player::Player()
-  : x(0), y(0), lives(10), items(0), dist_covered(0), took_item(false) {}
+using std::cin;
+using std::cout;
+using std::endl;
 
-Player::Player(short &x, short &y)
-  : x(x), y(y), lives(10), items(0), dist_covered(0), took_item(false) {}
+Player::Player()
+  : x(0), y(0), lives(10), items(0), dist_covered(0),
+  items_consumed(0), visited_qty(0), dangers(0),
+  took_item(false), teleport(false) {}
 
 void Player::action(char &item) {
   if(item == '*') {
     --this->lives; 
+    ++this->dangers;
   } else if(item != '0') {
     ++this->items;
+    ++this->items_consumed;
     --item;
     this->took_item = true;
   }
@@ -22,8 +27,8 @@ void Player::action(char &item) {
 }
 
 void Player::print() {
-  std::cout << "Vidas: " << (lives < 10 ? "0" : "") << lives
-            << "\tItens: " << items << '\n';
+  cout << "Vidas: " << (lives < 10 ? "0" : "") << lives
+       << "\tItens: " << items << '\n';
 }
 
 std::string Player::status() {
@@ -33,12 +38,3 @@ std::string Player::status() {
 }
 
 bool Player::is_alive() { return this->lives != 0; }
-
-short Player::getX() { return this->x; }
-short Player::getY() { return this->y; }
-short Player::getLives() { return this->lives; }
-short Player::getItems() { return this->items; }
-
-//inline bool Player::notInBoundaries(const short &mat_sz) {
-//  return (x == 0 && move_x == -1) || (x == mat_sz - 1 && move_x == 1) || (p.y == 0 && m.y == -1) || (p.y == mat_sz - 1 && m.y == 1);
-//}
