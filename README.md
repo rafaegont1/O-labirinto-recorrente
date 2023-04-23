@@ -59,7 +59,7 @@
   A seguir, é mostrado um exemplo de um labirinto de apenas um matriz como entrada. O garoto começará na primeira coluna da primeira linha, e caminhará na diagonal até a última coluna da última linha. Supondo que o garoto comece com 10 vidas, 0 itens, a interação dele com as casas mudará estas estatísticas. A tabela de cima representa a entrada, enquanto a de baixo mostra a saída.
 </p>
 
-<table>
+<table align="center">
   <tr>
     <td align="center">$\colorbox{olive}{2}$</td>
     <td align="center">#</td>
@@ -77,7 +77,7 @@
   </tr>
 </table>
 
-<table>
+<table align="center">
   <tr>
     <td align="center">$\colorbox{olive}{1}$</td>
     <td align="center">#</td>
@@ -265,7 +265,7 @@
   <li>
     <code><strong>bool is_alive()</strong></code> Retorna verdadeiro se o garoto ainda estiver vivo.
   </li>
-<ul>
+</ul>
 
 <h2>Exemplo</h2>
 
