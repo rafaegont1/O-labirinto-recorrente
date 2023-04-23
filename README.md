@@ -320,13 +320,13 @@
       <td align="center" style="width: 33%">#</td>
   </tr>
   <tr>
-      <td align="center" style="width: 33%">0</td>
-      <td align="center" style="width: 33%">0</td>
       <td align="center" style="width: 33%">4</td>
+      <td align="center" style="width: 33%">0</td>
+      <td align="center" style="width: 33%">0</td>
   </tr>
   <tr>
-      <td align="center" style="width: 33%">1</td>
       <td align="center" style="width: 33%">0</td>
+      <td align="center" style="width: 33%">2</td>
       <td align="center" style="width: 33%">#</td>
   </tr>
 </table>
@@ -338,14 +338,14 @@
       <td align="center" style="width: 33%">0</td>
   </tr>
   <tr>
-      <td align="center" style="width: 33%">1</td>
+      <td align="center" style="width: 33%">0</td>
       <td align="center" style="width: 33%">0</td>
       <td align="center" style="width: 33%">#</td>
   </tr>
   <tr>
       <td align="center" style="width: 33%">*</td>
       <td align="center" style="width: 33%">0</td>
-      <td align="center" style="width: 33%">2</td>
+      <td align="center" style="width: 33%">3</td>
   </tr>
 </table>
 
@@ -360,9 +360,9 @@
       <td align="center" style="width: 33%">0</td>
   </tr>
   <tr>
-      <td align="center" style="width: 33%">1</td>
-      <td align="center" style="width: 33%">1</td>
       <td align="center" style="width: 33%">0</td>
+      <td align="center" style="width: 33%">1</td>
+      <td align="center" style="width: 33%">1</td>
   </tr>
   <tr>
       <td align="center" style="width: 33%">1</td>
@@ -388,6 +388,10 @@
       <td align="center" style="width: 33%">1</td>
   </tr>
 </table>
+
+<p align="justify">
+  Neste exemplo, o garoto percourreu um total de 49 casas, consumiu 32 itens, deixou de explorar 6 casas e enfrentou 3 perigos.
+</p>
 
 <p align="justify">
   O exemplo aqui exposto foi compilado com o GNU Compiler Collection (gcc) versão 4:11.2.0-1ubuntu1, no sistema operacional Ubuntu 22.04.2 LTS (Jammy Jellyfish). O computador possuia uma placa-mãe ASUS AM1M-A/BR, 8 GB de memória RAM DDR3 e um processador AMD Athlon 5150 (arquitetura x86_64).
