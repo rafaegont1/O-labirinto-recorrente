@@ -1,5 +1,16 @@
 <h1>O labirinto recorrente</h1>
 
+<table style="float: left">
+    <tr>
+        <td>..</td>
+    </tr>
+</table>
+<table style="float: left">
+    <tr>
+        <td>..</td>
+    </tr>
+</table>
+
 <p align="justify"><code>Agora</code> que produzimos um trabalho de aquecimento que envolve o caminhamento de matrizes, está na hora de incluir nesse processo execuções mais elaboradas, as quais nos permita analisar o custo computacional de todo o processo. Sendo assim, considere o seguinte problema:</p>
 
 <ul>
